@@ -39,17 +39,17 @@ function preload(){
 }
 
 function setup() {
-  createCanvas(600, 200);
+  createCanvas(windowWidth,windowHeight);
   
   var mensagen = "ola";
   
   
-  trex = createSprite(50,180,20,50);
+  trex = createSprite(50,height-20,20,50);
   trex.addAnimation("running", trex_correndo);
   trex.addAnimation("collided" ,trex_colidiu);
   trex.scale = 0.5;
   
-  solo = createSprite(200,180,400,20);
+  solo = createSprite(200,height-20,400,20);
   solo.addImage("ground",imagemdosolo);
   solo.x = solo.width /2;
    
@@ -64,7 +64,7 @@ function setup() {
   fimDeJogo.scale = 0.5;
   reiniciar.scale = 0.5;
     
-  soloinvisivel = createSprite(200,190,400,10);
+  soloinvisivel = createSprite(200,height-10,400,10);
   soloinvisivel.visible = false;
    
   //criar grupos de obstáculos e de nuvens
@@ -103,9 +103,10 @@ function draw() {
     }
     
     //saltar quando a tecla de espaço é pressionada
-    if(keyDown("space")&& trex.y >= 100) {
+    if(touches.length > 0 || keyDown("space")&& trex.y >= height-40) {
        trex.velocityY = -12;
        somSalto.play();
+      touches = [];
   }
     
     
@@ -183,7 +184,7 @@ function draw() {
 
 function gerarObstaculos(){
  if (frameCount % 100 === 0){
-   var obstaculo = createSprite(400,165,10,40);
+   var obstaculo = createSprite(400,height-20,10,40);
   obstaculo.velocityX = solo.velocityX;
       
     //gerar obstáculos aleatórios
@@ -219,7 +220,7 @@ function gerarNuvens() {
   //escreva o código aqui para gerar as nuvens 
   if (frameCount % 60 === 0) {
     nuvem = createSprite(600,100,40,10);
-    nuvem.y = Math.round(random(10,60));
+    nuvem.y = Math.round(random(10,300));
     nuvem.addImage(imagemdanuvem);
     nuvem.scale = 0.5;
     nuvem.velocityX = -3;
